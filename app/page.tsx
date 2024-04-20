@@ -1,113 +1,122 @@
-import Image from "next/image";
+import Link from "next/link"
+import {Avatar, AvatarImage} from "@/app/components/ui/avatar"
+import {Button} from "@/app/components/ui/button"
+import {Popover, PopoverContent, PopoverTrigger} from "@/app/components/ui/popover"
+import {Calendar} from "@/app/components/ui/calendar"
+import {Card, CardContent} from "@/app/components/ui/card"
+import {Input} from "@/app/components/ui/input";
+import {Button2} from "@/app/components/ui/button2";
+import {ActivityIcon, CalendarDaysIcon, HomeIcon, SearchIcon} from "@/app/components/ui/icons";
+
+const NEWS_DATA = [
+  {
+    author: 'finbold.com',
+    title: 'AI predicts Dogecoin price for May 1, 2024',
+    description: 'Although many assets in the cryptocurrency sector have resumed their bullish run from the previous weeks, Dogecoin (DOGE) still seems to be waiting for its turn. Despite the growing transaction volume indicating heightened activity, the meme-inspired cryptocu…',
+    urlToImage: 'https://c.biztoc.com/p/d31595c9e595ca5a/s.webp'
+  },
+  {
+    author: 'finance.yahoo.com',
+    title: 'Should You Buy Tesla Stock Before Aug. 8?',
+    description: 'One of the most scrutinized businesses in the world is electric vehicle (EV) pioneer Tesla (NASDAQ: TSLA). Tesla\'s unconventional CEO, Elon Musk, has a lot to do with the company\'s constant position in the spotlight. Musk\'s tendency to go off-script during ea…',
+    urlToImage: 'https://c.biztoc.com/p/d0fb4501dfefa328/s.webp'
+  },
+  {
+    author: 'Matthew Ehret-Kump',
+    title: 'The Occult Tesla: Why Tesla Flattened Space and Attacked Einstein',
+    description: 'All Global Research articles can be read in 51 languages by activating the Translate Website button below the author’s name (only available in desktop version). To receive Global Research’s Daily Newsletter (selected articles), click here. Click the share but…',
+    urlToImage: 'https://www.globalresearch.ca/wp-content/uploads/2024/04/tesla.jpeg'
+  }
+]
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <section key="1">
+      <div className="flex flex-col h-screen">
+        <div className="flex items-center justify-between p-4 border-b sm:p-6">
+          <div className="flex items-center gap-2 text-xl font-semibold">
+            <Link className="flex items-center gap-2" href="#">
+              <HomeIcon className="w-6 h-6"/>
+              Home
+            </Link>
+            <Link className="flex items-center gap-2" href="#">
+              <ActivityIcon className="w-6 h-6"/>
+              Headlines
+            </Link>
+          </div>
+          <div className="flex items-center gap-4 md:gap-6">
+            <div>
+              <div className="rounded-lg focus:outline-none focus:ring-1 ring-gray-900/40">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage alt="Avatar" src="/avatar.jpg"/>
+                </Avatar>
+                <span className="sr-only">Toggle menu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center w-full px-8 pt-4">
+          <div className="relative">
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"/>
+            <Input
+              className="rounded-md border border-gray-300 bg-white py-2 pl-10 pr-12 text-sm focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200"
+              placeholder="Search for anything..."
+              type="search"
             />
-          </a>
+          </div>
+          <Button2
+            className="ml-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-800"
+            type="submit"
+          >
+            Search
+          </Button2>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="w-[240px] justify-start text-left font-normal" variant="outline">
+                <CalendarDaysIcon className="mr-1 h-4 w-4 -translate-x-1"/>
+                Pick a date
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="start" className="w-auto p-0">
+              <Calendar initialFocus mode="single"/>
+            </PopoverContent>
+          </Popover>
+        </div>
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          <div className="flex-1 flex flex-col min-h-0 overflow-y-auto">
+            <div className="grid gap-4 p-4 md:grid-rows-[min-content_1fr] lg:gap-6 md:p-6">
+              {NEWS_DATA.map((news, index) => (
+                <Card key={`${news.title}-${index}`}>
+                  <CardContent className="p-4">
+                    <div className="grid gap-4">
+                      <div className="flex items-center gap-4">
+                        <img
+                          alt="Cover image"
+                          className="aspect-square rounded-lg object-cover"
+                          height={120}
+                          src={news.urlToImage}
+                          width={120}
+                        />
+                        <div className="grid gap-2">
+                          <h2 className="text-xl font-semibold">{news.title}</h2>
+                          <p className="text-sm leading-none">{news.description}</p>
+                          <div className="flex justify-between items-end">
+                            <div className="flex items-center gap-2 text-sm">
+                              <div className="flex flex-col">
+                                <div className="font-semibold">{news.author}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    </section>
+  )
 }
