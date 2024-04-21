@@ -3,10 +3,10 @@ import {Avatar, AvatarImage} from "@/app/components/ui/avatar"
 import {Button} from "@/app/components/ui/button"
 import {Popover, PopoverContent, PopoverTrigger} from "@/app/components/ui/popover"
 import {Calendar} from "@/app/components/ui/calendar"
-import {Card, CardContent} from "@/app/components/ui/card"
 import {Input} from "@/app/components/ui/input";
 import {Button2} from "@/app/components/ui/button2";
 import {ActivityIcon, CalendarDaysIcon, HomeIcon, SearchIcon} from "@/app/components/ui/icons";
+import Card2 from "@/app/components/Card2";
 
 const NEWS_DATA = [
   {
@@ -30,7 +30,7 @@ const NEWS_DATA = [
 ]
 
 async function getData() {
-  const res = await fetch('https://newsapi.org/v2/everything?q=tesla&from=2024-03-20&sortBy=publishedAt&apiKey=484073055b364b94b553a82ab633e949')
+  const res = await fetch('https://newsapi.org/v2/everything?q=tesla&from=2024-03-22&sortBy=publishedAt&apiKey=484073055b364b94b553a82ab633e949')
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
@@ -100,32 +100,7 @@ export default async function Home() {
           <div className="flex-1 flex flex-col min-h-0 overflow-y-auto">
             <div className="grid gap-4 p-4 md:grid-rows-[min-content_1fr] lg:gap-6 md:p-6">
               {data.articles.map((article: any, index: number) => (
-                <Card key={`${article.title}-${index}`}>
-                  <CardContent className="p-4">
-                    <div className="grid gap-4">
-                      <div className="flex items-center gap-4">
-                        <img
-                          alt="Cover image"
-                          className="aspect-square rounded-lg object-cover"
-                          height={120}
-                          src={article.urlToImage}
-                          width={120}
-                        />
-                        <div className="grid gap-2">
-                          <h2 className="text-xl font-semibold">{article.title}</h2>
-                          <p className="text-sm leading-none">{article.description}</p>
-                          <div className="flex justify-between items-end">
-                            <div className="flex items-center gap-2 text-sm">
-                              <div className="flex flex-col">
-                                <div className="font-semibold">{article.author}</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <Card2 key={article.title} article={article} />
               ))}
             </div>
           </div>
